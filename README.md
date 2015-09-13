@@ -129,4 +129,15 @@ prop.Value  = "myDocumentPropertyValue"
 
 ### Get Current Username
 
+```
+from System.Threading import Thread 
+print Thread.CurrentPrincipal.Identity.Name 
+```
+
+### Loop Through Pages 
+```
+for page in Application.Document.Pages:
+  print page.Title
+````
+
 
