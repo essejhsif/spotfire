@@ -140,4 +140,55 @@ for page in Application.Document.Pages:
   print page.Title
 ````
 
+###Mark Rows
+```
+from Spotfire.Dxp.Application.Visuals import TablePlot
+
+targetViz = markingViz.As[TablePlot]();
+
+rowSelection = targetViz.Data.DataTableReference.Select(selectStatement);
+
+targetViz.Data.MarkingReference.SetSelection(rowSelection, targetViz.Data.DataTableReference);
+```
+
+###Perform Operations on Columns in a Graphical Table
+```
+from Spotfire.Dxp.Application.Visuals.Miniatures import GraphicalTable
+from Spotfire.Dxp.Application.Visuals import VisualTypeIdentifiers
+
+for col in gtable.As[GraphicalTable]().Columns: 
+ #Calculated Value Columns
+ if col.Visualization.TypeId == VisualTypeIdentifiers.CalculatedValueMiniatureVisualization:
+  try:
+   vExp = col.Visualization.ValueAxis.Expression
+  except:
+   0
+
+ #Icon Columns
+ if col.Visualization.TypeId == VisualTypeIdentifiers.IconMiniatureVisualization:
+  try:   
+   vExp = col.Visualization.IconAxis.Expression
+  except:
+   0
+
+ #Sparkline Columns
+ if col.Visualization.TypeId == VisualTypeIdentifiers.SparklineMiniatureVisualization:
+  try:   
+   vExp = col.Visualization.YAxis.Expression
+  except:
+   0
+
+ #Bullet Graph Columns
+ if col.Visualization.TypeId == VisualTypeIdentifiers.BulletGraphMiniatureVisualization:
+  try:   
+   vExp = col.Visualization.ValueAxis.Expression
+  except:
+   0
+
+ try:
+  col.Title = vExp
+ except:
+  0
+```
+
 
